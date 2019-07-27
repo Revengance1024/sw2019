@@ -1,0 +1,13 @@
+{
+    "name": "andris/sws",
+    "authors": [
+        {
+            "name": "Andris Bremanis",
+            "email": "andris@scandiweb.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"Sw\\": "src/"}
+    }
+}
