@@ -29,8 +29,8 @@ class RealDatabase implements DatabaseInterface
 
             $this->connection = mysqli_connect(
                 $config['db_host'],
-                $config['db_user'],
-                $config['db_pass'],
+                $config['db_username'],
+                $config['db_password'],
                 $config['db_name']
             );
         }
@@ -39,37 +39,35 @@ class RealDatabase implements DatabaseInterface
     }
 
     /**
+     * TODO for Billy (Task 4): Update insert to protect from SQL injection.
+     *  We let our intern write this. As expected, you will have to rewrite it.
+     *  Focus on values, columns should only be defined in code, so no need to change them.
+     *
      * @param $table string
+     * @param array $columns
      * @param $data array
      * @throws Exception
      */
-    public function insert(string $table, array $data)
+    public function insert(string $table, array $columns, array $data)
     {
-        if (!array_key_exists('sku', $data)) {
-            throw new Exception('Missing sku');
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                $data[$key] = '"' . $value . '"';
+            }
         }
 
-        /**
-         * DON'T DO THIS. USE BIND
-         */
         $this->getConnection()->query(
             sprintf(
-                'INSERT INTO %s (sku, name, price, attribute) ' .
-                'VALUES ("%s", "%s", %s, "%s")',
+                'INSERT INTO %s (%s) VALUES (%s)',
                 $table,
-                $data['sku'],
-                $data['name'],
-                $data['price'],
-                $data['attribute'] ?? ''
+                implode(',', $columns),
+                implode(',', $data)
             )
         );
     }
 
     public function select(string $table, string $sku)
     {
-        /**
-         * DON'T DO THIS. USE BIND
-         */
         $data = $this->getConnection()->query(
             sprintf(
                 'SELECT * FROM %s WHERE sku = "%s"',

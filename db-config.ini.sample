@@ -1,3 +1,4 @@
-db_name=swtest
-db_user=root
-db_pass=pass
+db_host=localhost
+db_name=great_database
+db_username=
+db_password=

@@ -28,7 +28,7 @@ class DiskProduct extends AbstractProduct
 
     public function load($sku)
     {
-        $data = $this->connection->select(self::TABLE, $sku);
+        $data = $this->connection->select(self::TABLE_NAME, $sku);
 
         if (!empty($data)) {
             $this->sku = $data['sku'];

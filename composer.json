@@ -6,7 +6,9 @@
             "email": "andris@scandiweb.com"
         }
     ],
-    "require": {},
+    "require": {
+        "ext-mysqli": "*"
+    },
     "autoload": {
         "psr-4": {"Sw\\": "src/"}
     }
